@@ -1,13 +1,14 @@
-"use strict";
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.reset();
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = x;
+    this.y = y;
+    this.multiplier = Math.floor((Math.random() * 5) + 1);
 };
 
 // Update the enemy's position, required method for game
@@ -16,12 +17,17 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = (this.x + this.speed * dt);
-    if(this.x >500){
-        this.x = -60;
-        this.randomSpeed();
+    this.x = this.x + 101 * dt * this.multiplier;
+    // Check for collisions with the player
+    if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
+        alert("Ouch you ran into a bug!");
+        player.reset();
+    }
+    if (this.x > 750) {
+        this.reset();
     }
 };
+
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -29,71 +35,74 @@ Enemy.prototype.render = function() {
 };
 
 Enemy.prototype.reset = function() {
-    this.col = -1;
-    this.row = getRandomInt(1,3);
-    this.x = 101 * this.col;
-    this.y = 83 * this.row;
-    this.speed = getRandomInt(2,6);
+    this.x = -200;
+    var yVals = [220, 140, 60];
+    this.y = yVals[Math.floor((Math.random() * 3))];
+    this.multiplier = Math.floor((Math.random() * 5) + 1);
 };
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function() {
+var Player = function(x,y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.reset();
+    this.x = x;
+    this.y = y;
 
+    this.xo = x;
+    this.yo = y;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/char-boy.png';
 };
 
-player.prototype.update = function() {
-    if(this.moveable) {
-        this.x = 101 * this.col;
-        this.y = 83 * this.row;
-    }
-
-    if(this.y < 83 && this.moveable) {
-        this.moveable = false;
-        return true;
-    }
-
-    return false;
+Player.prototype.update = function() {
+    this.x = this.x;
+    this.y = this.y;
+    if (this.y <= 40) {
+    alert("Oops you fell into the water!");
+    this.reset();
+  }
 };
 
-player.prototype.render = function() {
+Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-player.prototype.reset = function() {
-    this.col = getRandomInt(0,4);
-    this.row = 5;
-    this.moveable = true;
-};
+Player.prototype.reset = function() {
+    // Reset the player to the original position
+    this.x = this.xo;
+    this.y = this.yo;
 
-player.prototype.handleInput = function(key) {
-    switch (key){
-        case 'left':
-            this.col--;
-            break;
-        case 'up':
-            this.row--;
-            break;
-        case 'right':
-            this.col++;
-            break;
-        case 'down':
-            this.row++;
-            break;
+    // Reset the image
+    this.sprite = 'images/char-boy.png';
+};
+Player.prototype.handleInput = function(dir) {
+
+    // Change the player's position based on the user keyboard input
+    if (dir == 'up') {
+        this.y = this.y - 80;
+    } else if (dir == 'down') {
+        this.y = this.y + 80;
+    } else if (dir == 'left') {
+        this.x = this.x - 101;
+    } else if (dir == 'right') {
+        this.x = this.x + 101;
     }
-    if(this.col < 0) this.col = 0;
-    if(this.col > 4) this.col = 4;
-    if(this.row < 0) this.row = 0;
-    if(this.row > 5) this.row = 5;
-};
 
+    if (this.x < 0) {
+        // Player is off to the left side of the board, move the player
+        // back to zero
+        this.x = 0;
+
+    } else if (this.x > 606) {
+        // Player is off to the right side of the board, move the player
+        // back to the right-most square (606)
+        this.x = 606;
+
+    }
+};
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -105,11 +114,25 @@ function getRandomInt(min, max) {
 // Place the player object in a variable called player
 
 var allEnemies = [];
-for(var i = 0; i < 3; i++){
-    allEnemies.push(new Enemy());
+var yVals = [220, 140, 60];
+
+
+for (var i = 0; i < 5; i++) {
+        // Set a starting x-position based on a random value
+    var x = Math.floor((Math.random() * -1000) + 1);
+
+    // Set a starting y-position based on a random selection
+    // of the 3 possible values
+    var y = yVals[Math.floor(Math.random() * 3)];
+
+    // Create the new enemy object
+    var enemy = new Enemy(x, y);
+
+    // Push the enemy into the array
+    allEnemies.push(enemy);
 }
 
-var player = new player();
+var player = new Player(303, 380);
 
 
 
