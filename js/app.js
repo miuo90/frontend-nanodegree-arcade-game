@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     this.x = this.x + 101 * dt * this.multiplier;
     // Check for collisions with the player
     if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
-        alert("Ouch you ran into a bug!");
+        alert("Ouch you ran into abug!");
         player.reset();
     }
     if (this.x > 750) {
@@ -96,10 +96,17 @@ Player.prototype.handleInput = function(dir) {
         // back to zero
         this.x = 0;
 
-    } else if (this.x > 606) {
+    } else if (this.x > 400) {
         // Player is off to the right side of the board, move the player
-        // back to the right-most square (606)
-        this.x = 606;
+        // back to the right-most square
+        this.x = 400;
+
+    }
+    if (this.y < 0) {
+        this.y = 0;
+
+    } else if (this.y > 400) {
+        this.y = 400;
 
     }
 };
