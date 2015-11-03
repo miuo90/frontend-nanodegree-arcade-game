@@ -61,9 +61,9 @@ Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
     if (this.y <= 40) {
-    alert("Oops you fell into the water!");
-    this.reset();
-  }
+        alert("Oops you fell into the water!");
+        this.reset();
+    }
 };
 
 Player.prototype.render = function() {
@@ -74,9 +74,6 @@ Player.prototype.reset = function() {
     // Reset the player to the original position
     this.x = this.xo;
     this.y = this.yo;
-
-    // Reset the image
-    this.sprite = 'images/char-boy.png';
 };
 Player.prototype.handleInput = function(dir) {
 
@@ -92,13 +89,9 @@ Player.prototype.handleInput = function(dir) {
     }
 
     if (this.x < 0) {
-        // Player is off to the left side of the board, move the player
-        // back to zero
         this.x = 0;
 
     } else if (this.x > 400) {
-        // Player is off to the right side of the board, move the player
-        // back to the right-most square
         this.x = 400;
 
     }
@@ -116,10 +109,36 @@ function getRandomInt(min, max) {
 }
 
 
+var Gem = function (x, y) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/Star.png';
+
+    this.xo = x;
+    this.yo = y;
+};
+
+Gem.prototype.update = function() {
+    if (this.y === player.y + 65 && this.x === player.x && ) {
+            this.x = -100;
+            this.y = -100;
+    }
+};
+
+Gem.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Gem.prototype.reset = function() {
+    this.x=-200;
+}
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
+var gem = new Gem();
 var allEnemies = [];
 var yVals = [220, 140, 60];
 
@@ -140,6 +159,7 @@ for (var i = 0; i < 5; i++) {
 }
 
 var player = new Player(303, 380);
+
 
 
 
