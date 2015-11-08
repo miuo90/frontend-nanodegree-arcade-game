@@ -50,8 +50,8 @@ var Player = function(x,y) {
     this.x = x;
     this.y = y;
 
-    this.xo = x;
-    this.yo = y;
+    this.initialX = x;
+    this.initialY = y;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/char-boy.png';
@@ -60,10 +60,10 @@ var Player = function(x,y) {
 Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
-    if (this.y <= 40) {
-        alert("Oops you fell into the water!");
-        this.reset();
-    }
+        if (this.y <= 40) {
+            alert("Oops you fell into the water!");
+            this.reset();
+        }
 };
 
 Player.prototype.render = function() {
@@ -72,8 +72,8 @@ Player.prototype.render = function() {
 
 Player.prototype.reset = function() {
     // Reset the player to the original position
-    this.x = this.xo;
-    this.y = this.yo;
+    this.x = this.initialX;
+    this.y = this.initialY;
 };
 Player.prototype.handleInput = function(dir) {
 
@@ -104,25 +104,21 @@ Player.prototype.handleInput = function(dir) {
     }
 };
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 
 var Gem = function (x, y) {
     this.x = x;
     this.y = y;
     this.sprite = 'images/Star.png';
-
-    this.xo = x;
-    this.yo = y;
+    this.initialX = x;
+    this.initialY = y;
 };
 
-Gem.prototype.update = function() {
-    if (this.y === player.y + 65 && this.x === player.x && ) {
-            this.x = -100;
-            this.y = -100;
+Gem.prototype.update = function(dt) {
+    if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
+        this.x = -100;
+        this.y = -100;
     }
+
 };
 
 Gem.prototype.render = function () {
@@ -131,14 +127,15 @@ Gem.prototype.render = function () {
 
 Gem.prototype.reset = function() {
     this.x=-200;
-}
+};
 
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var gem = new Gem();
+
+
 var allEnemies = [];
 var yVals = [220, 140, 60];
 
@@ -157,6 +154,8 @@ for (var i = 0; i < 5; i++) {
     // Push the enemy into the array
     allEnemies.push(enemy);
 }
+
+var gem = new Gem(220, 140);
 
 var player = new Player(303, 380);
 
