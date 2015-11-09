@@ -1,4 +1,5 @@
 // Enemies our player must avoid
+'use strict';
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
