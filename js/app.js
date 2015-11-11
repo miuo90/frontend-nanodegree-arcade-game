@@ -1,11 +1,11 @@
 // Enemies our player must avoid
-'use strict';
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    'use strict';
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
@@ -18,6 +18,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    'use strict';
     this.x = this.x + 101 * dt * this.multiplier;
     // Check for collisions with the player
     if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
@@ -32,10 +33,12 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    'use strict';
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Enemy.prototype.reset = function() {
+    'use strict';
     this.x = -200;
     var yVals = [220, 140, 60];
     this.y = yVals[Math.floor((Math.random() * 3))];
@@ -48,6 +51,7 @@ Enemy.prototype.reset = function() {
 var Player = function(x,y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
+    'use strict';
     this.x = x;
     this.y = y;
 
@@ -59,6 +63,7 @@ var Player = function(x,y) {
 };
 
 Player.prototype.update = function() {
+    'use strict';
     this.x = this.x;
     this.y = this.y;
         if (this.y <= 40) {
@@ -68,10 +73,12 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.render = function() {
+    'use strict';
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Player.prototype.reset = function() {
+    'use strict';
     // Reset the player to the original position
     this.x = this.initialX;
     this.y = this.initialY;
@@ -79,6 +86,7 @@ Player.prototype.reset = function() {
 Player.prototype.handleInput = function(dir) {
 
     // Change the player's position based on the user keyboard input
+    'use strict';
     if (dir == 'up') {
         this.y = this.y - 80;
     } else if (dir == 'down') {
@@ -107,6 +115,7 @@ Player.prototype.handleInput = function(dir) {
 
 
 var Gem = function (x, y) {
+    'use strict';
     this.x = x;
     this.y = y;
     this.sprite = 'images/Star.png';
@@ -115,6 +124,7 @@ var Gem = function (x, y) {
 };
 
 Gem.prototype.update = function(dt) {
+    'use strict';
     if (this.y == player.y && (this.x > player.x - 20 && this.x < player.x + 20)) {
         this.x = -100;
         this.y = -100;
@@ -123,10 +133,12 @@ Gem.prototype.update = function(dt) {
 };
 
 Gem.prototype.render = function () {
+    'use strict';
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 Gem.prototype.reset = function() {
+    'use strict';
     this.x=-200;
 };
 
@@ -166,6 +178,7 @@ var player = new Player(303, 380);
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+    'use strict';
     var allowedKeys = {
         37: 'left',
         38: 'up',

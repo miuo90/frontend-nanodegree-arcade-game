@@ -1,7 +1,14 @@
 <How to Run the Game>
-Download and open frontend-nanodegree-arcade-game file.
 
-Click on index.html file.
+Go to https://github.com/miuo90/frontend-nanodegree-arcade-game
+
+Click on "Download ZIP."
+
+Right click on the downloaded file and select unzip function. 
+
+Open the unzipped file and locate index.html file. 
+
+Click on it and a web browser should open. 
 
 A web browser will open and you can start to play!
 
